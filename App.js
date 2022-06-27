@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { Provider } from 'react-redux';
+import useNavigationStatus from './src/hooks/navigationHook';
 import store from './src/redux/store';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';

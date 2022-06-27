@@ -10,7 +10,7 @@ const Input = ({ placeholder, hasError, setState }) => {
             style={hasError ? styles.input_with_error : styles.input}
             // secureTextEntry checks is the placeholder is password
             secureTextEntry={placeholder === 'Password' ? true : false}
-            maxLength={12}
+            maxLength={32}
             onChangeText={text => setState(text.toLowerCase())}
         />
     );
