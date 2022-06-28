@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, ActivityIndicator } from 'react-native';
+import Snackbar from 'react-native-snackbar';
 import { useDispatch, useSelector } from 'react-redux';
+import { broken_api, correct_api } from '../api/api_constans';
 import useNavigationStatus from '../hooks/navigationHook';
-import { getPosts } from '../redux/posts.slice';
+import { deletePosts, getBrokenPosts, getPosts } from '../redux/posts.slice';
 import { setUser } from '../redux/user.slice';
 
 const HomeScreen = ({ navigation }) => {
@@ -16,14 +18,24 @@ const HomeScreen = ({ navigation }) => {
             ),
         });
     });
-    console.log(posts);
     useEffect(() => {
-        dispatch(getPosts())
+        dispatch(getBrokenPosts());
+        return () => {
+            dispatch(deletePosts())
+        }
     }, [dispatch]);
 
     return (
-        <View>
-            <Text>It's a HomeScreen!</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            {posts.error === true ? Snackbar.show({
+                text: "First request is always bitten, because requirments.",
+                duration: Snackbar.LENGTH_INDEFINITE,
+                action: {
+                    text: 'Try correct request',
+                    onPress: () => { dispatch(getPosts()) }
+                },
+            }) : null}
+            {posts.loading || posts.posts === null || posts.error ? <ActivityIndicator size={"large"} /> : <Text>It's a HomeScreen!</Text>}
         </View>
     );
 };
