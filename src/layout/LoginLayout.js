@@ -17,7 +17,7 @@ const LoginLayout = () => {
 
     // checkForEmail func check is typed email is correct and valid
     const checkForEmail = (email) => {
-        const reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; // RegEx form for email
+        const reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; // RegEx form for email check
 
         if (reg.test(email)) {
             return true;

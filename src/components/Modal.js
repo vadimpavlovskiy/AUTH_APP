@@ -12,6 +12,7 @@ const CommentsModal = ({ visibility, modalVisible, setModalVisible, id }) => {
     const comments = useSelector(state => state.comments);
     console.log(comments);
     useEffect(() => {
+        // First request will be always broken to show error handling functionality
         dispatch(getComments(id, broken_api_comments))
         return (() => {
             dispatch(deleteComments());
@@ -19,14 +20,13 @@ const CommentsModal = ({ visibility, modalVisible, setModalVisible, id }) => {
     }, [id, dispatch]);
 
     return (
-        <Modal animationType="slide" transparent={true} visible={!comments.error} >
+        <Modal propagateSwipe={true} animationType="slide" transparent={true} visible={!comments.error} >
             <TouchableOpacity onPressOut={() => { setModalVisible(false); dispatch(deleteComments()) }}>
                 <TouchableWithoutFeedback >
                     <View onStartShouldSetResponder={() => true} style={styles.modalContainer}>
-                        {comments.comments ? <FlatList scrollEnabled={true} style={{ flex: 1 }} keyExtractor={(item) => item.id} data={comments.comments} renderItem={CommentItem} /> : <ActivityIndicator size='large' />}
+                        {comments.comments ? <FlatList showsVerticalScrollIndicator={false} style={{ flex: 1 }} keyExtractor={(item) => item.id} data={comments.comments} renderItem={CommentItem} /> : <ActivityIndicator size='large' />}
                     </View>
                 </TouchableWithoutFeedback>
-
             </TouchableOpacity>
         </Modal >
     );

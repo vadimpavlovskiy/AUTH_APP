@@ -12,15 +12,10 @@ const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const posts = useSelector(state => state.posts)
     useNavigationStatus();
-    React.useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <Button title="Log Out" onPress={() => { dispatch(setUser(null)); }} />
-            ),
-        });
-    });
+
     useEffect(() => {
-        setTimeout(() => dispatch(getPosts(broken_api_posts)), 3000)
+        // First request will be always broken to show error handling functionality
+        setTimeout(() => dispatch(getPosts(broken_api_posts)))
         return () => {
             dispatch(deletePosts())
         }

@@ -8,11 +8,7 @@ const PostsItem = ({ id, title, body }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const selector = useSelector(state => state.comments);
 
-    function Test() {
-        console.log('====================================');
-        console.log(selector.error);
-        console.log('====================================');
-    }
+    // This 'strange' togglers here was made specially for snackbar and api request functionality
     return (
         <TouchableOpacity style={styles.itemContainer} onPress={() => { setModalVisible(!modalVisible); }}>
             {modalVisible ? <CommentsModal modalVisible={modalVisible} setModalVisible={setModalVisible} id={id} /> : null}

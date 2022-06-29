@@ -15,14 +15,17 @@ export const getPosts = (api) => async (dispatch) => {
             if (data.ok) {
                 return data.json();
             } else {
-                Snackbar.show({
-                    text: "This request is bitten, because requirments.",
-                    duration: Snackbar.LENGTH_INDEFINITE,
-                    action: {
-                        text: 'Try correct request',
-                        onPress: () => { dispatch(getPosts(correct_api_posts)) }
-                    },
-                })
+                setTimeout(() => {
+                    Snackbar.show({
+                        text: "This request is bitten, because requirments.",
+                        duration: Snackbar.LENGTH_INDEFINITE,
+                        action: {
+                            text: 'Try correct request',
+                            onPress: () => { dispatch(getPosts(correct_api_posts)) }
+                        },
+                    })
+                }, 200)
+
             }
         }).then(data => { data ? dispatch(setPosts(data)) : dispatch(setError()) }).catch((error) => { dispatch(setError()) });
 }

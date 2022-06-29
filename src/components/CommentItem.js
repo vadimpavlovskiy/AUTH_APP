@@ -1,12 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const CommentItem = ({ item }) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container}>
             <Text style={styles.email}>{item.email}</Text>
             <Text style={styles.comment}>{item.body}</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 
