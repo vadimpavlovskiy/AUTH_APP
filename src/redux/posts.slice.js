@@ -1,41 +1,30 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { broken_api, correct_api } from "../api/api_constans";
+import Snackbar from "react-native-snackbar";
+import { correct_api_posts } from "../api/api_constans";
 
 const initialState = {
     posts: null,
     loading: false,
     error: false,
 }
-
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (api) => async (dispatch) => {
     dispatch(setLoadingPosts());
-    const posts = await fetch('https://jsonplaceholder.typicode.com/posts')
+    console.log(api);
+    await fetch(api)
         .then((data) => {
             if (data.ok) {
-
                 return data.json();
-
             } else {
-                dispatch(setError())
+                Snackbar.show({
+                    text: "This request is bitten, because requirments.",
+                    duration: Snackbar.LENGTH_INDEFINITE,
+                    action: {
+                        text: 'Try correct request',
+                        onPress: () => { dispatch(getPosts(correct_api_posts)) }
+                    },
+                })
             }
-        }).catch(() => dispatch(setError()));
-    setTimeout(() => {
-        dispatch(setPosts(posts))
-    }, 3000)
-}
-export const getBrokenPosts = () => async (dispatch) => {
-    dispatch(setLoadingPosts());
-    const posts = await fetch('https://jsonplaceholder.typicode.com/post')
-        .then((data) => {
-            if (data.ok) {
-                setTimeout(() => {
-                    return dispatch(setPosts(data.json()));
-                }, 3000)
-            } else {
-                dispatch(setError())
-            }
-        }).catch((error) => { dispatch(setError()) });
-
+        }).then(data => { data ? dispatch(setPosts(data)) : dispatch(setError()) }).catch((error) => { dispatch(setError()) });
 }
 export const postsSlice = createSlice({
     name: 'posts',
@@ -74,6 +63,6 @@ export const postsSlice = createSlice({
     //     })
     // },
 });
-export const { deletePosts, setLoadingPosts, setError, setPosts } = postsSlice.actions
+export const { deletePosts, setLoadingPosts, setError, setPosts } = postsSlice.actions;
 
 export const postsReducer = postsSlice.reducer;
