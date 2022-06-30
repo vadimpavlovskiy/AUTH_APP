@@ -21,7 +21,10 @@ function useNavigationStatus() {
             : navigate.setOptions({
                 headerRight: () => (
                     <Button title="Log Out" onPress={() => { dispatch(setUser(null)); }} />
-                )
+                ),
+                headerLeft: () => (
+                    <></>
+                ),
             });
     });
 
